@@ -4,3 +4,4 @@
 
 * Settings panels
 * Role
+* Background activity starts
