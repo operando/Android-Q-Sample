@@ -1,7 +1,10 @@
 package com.os.operando.android.q.sample;
 
-import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.role.RoleManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -9,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.databinding.DataBindingUtil;
 import com.os.operando.android.q.sample.databinding.ActivityMainBinding;
 
@@ -52,6 +56,45 @@ public class MainActivity extends AppCompatActivity {
 //                                03-18 13:59:44.149 D/onActivityResult(11122): resultCode : 0
                     }
                 }
+            }
+        });
+
+
+        binding.notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent fullScreenIntent = new Intent(MainActivity.this, MainActivity.class);
+                PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(MainActivity.this, 0, fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                NotificationChannel channel = new NotificationChannel("test",
+                        "test",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this, "test")
+                        .setSmallIcon(R.drawable.ic_stat_name)
+                        .setContentTitle("Incoming call")
+                        .setContentText("(919) 555-1234")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_CALL)
+                        // Use a full-screen intent only for the highest-priority alerts where you
+                        // have an associated activity that you would like to launch after the user
+                        // interacts with the notification. Also, if your app targets Android Q, you
+                        // need to request the USE_FULL_SCREEN_INTENT permission in order for the
+                        // platform to invoke this notification.
+                        .setFullScreenIntent(fullScreenPendingIntent, true);
+
+                notificationBuilder.build();
+                notificationManager.notify("aaa", 1, notificationBuilder.build());
+                // 03-18 15:18:06.288 W/NotificationService( 1917): Package com.os.operando.android.q.sample: Use of fullScreenIntent requires the USE_FULL_SCREEN_INTENT permission
+            }
+        });
+
+        binding.activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(MainActivity.this, StartBackgroundActivityIntentService.class));
             }
         });
     }

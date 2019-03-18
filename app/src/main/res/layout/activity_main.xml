@@ -24,6 +24,22 @@
                 android:id="@+id/role" android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/button" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"/>
+        <Button
+                android:text="Full Screen Intent Notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:id="@+id/notification" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/role"/>
+        <Button
+                android:text="Start background activity"
+                android:layout_width="wrap_content"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/notification"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
